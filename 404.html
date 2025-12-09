@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+<link rel="icon" type="image/png" href="/favicon.png">
+
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>404 – This Route Doesn’t Exist</title>
+
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Source+Code+Pro:wght@400;600&display=swap');
+
+  :root {
+    --bg: #080808;
+    --text: #e0e0e0;
+    --accent: #08f7fe;
+    --accent-soft: #45d4dd;
+    --accent2: #f50057;
+    --card: #111;
+    --card-border: #1b1b1b;
+    --font-title: 'Orbitron', sans-serif;
+    --font-body: 'Source Code Pro', monospace;
+  }
+
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+
+  body {
+    background: radial-gradient(circle at top left, #0a0a0a, #000);
+    color: var(--text);
+    font-family: var(--font-body);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    padding: 40px 20px;
+    text-align: center;
+  }
+
+  h1 {
+    font-family: var(--font-title);
+    font-size: 2.6rem;
+    color: var(--accent2);
+    text-shadow: 0 0 6px var(--accent2);
+    margin-bottom: 15px;
+    letter-spacing: 2px;
+  }
+
+  p {
+    color: #aaa;
+    font-size: 1rem;
+    max-width: 600px;
+    margin-bottom: 25px;
+  }
+
+  .card {
+    background: var(--card);
+    border: 1px solid var(--card-border);
+    padding: 30px 40px;
+    border-radius: 10px;
+    box-shadow: 0 0 12px rgba(8, 247, 254, 0.25);
+  }
+
+  a.button {
+    display: inline-block;
+    margin-top: 15px;
+    padding: 10px 20px;
+    font-family: var(--font-title);
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: #000;
+    background: var(--accent);
+    border: 1px solid var(--accent);
+    border-radius: 6px;
+    text-decoration: none;
+    transition: 0.3s;
+  }
+
+  a.button:hover {
+    background: var(--accent-soft);
+    color: #000;
+    border-color: var(--accent-soft);
+    transform: translateY(-2px);
+    box-shadow: 0 0 10px rgba(8, 247, 254, 0.4);
+  }
+</style>
+
+</head>
+<body>
+
+<div class="card">
+  <h1>404 – This Route Doesn’t Exist</h1>
+  <p>The packet you sent tried its best… but there's no destination here.  
+  Either the link is wrong, the file moved, or the route just isn’t advertised.</p>
+
+  <a href="https://thenetworklayer.com" class="button">Return to Home</a>
+</div>
+
+</body>
+</html>
