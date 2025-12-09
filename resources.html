@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+ <link rel="icon" type="image/png" href="/favicon.png">
+ 
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Resources – The Network Layer</title>
+
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Source+Code+Pro:wght@400;600&display=swap');
+
+    :root {
+      --bg: #080808;
+      --text: #e0e0e0;
+      --accent: #08f7fe;
+      --accent-soft: #45d4dd;
+      --accent2: #f50057;
+      --card: #111;
+      --card-border: #1b1b1b;
+      --font-title: 'Orbitron', sans-serif;
+      --font-body: 'Source Code Pro', monospace;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      background: radial-gradient(circle at top left, #0a0a0a, #000);
+      color: var(--text);
+      font-family: var(--font-body);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 40px 20px;
+      min-height: 100vh;
+    }
+
+    nav {
+      width: 100%;
+      max-width: 900px;
+      display: flex;
+      justify-content: center;
+      gap: 40px;
+      margin-bottom: 22px;
+      border-bottom: 1px solid rgba(255,255,255,0.05);
+      padding-bottom: 10px;
+    }
+
+    nav a {
+      color: var(--accent-soft);
+      font-family: var(--font-title);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      transition: 0.3s;
+    }
+
+    nav a:hover {
+      color: var(--accent);
+    }
+
+    header {
+      text-align: center;
+      margin-bottom: 25px;
+    }
+
+    h1 {
+      font-family: var(--font-title);
+      font-size: 2.4rem;
+      color: var(--accent);
+      text-shadow: 0 0 4px var(--accent);
+      letter-spacing: 2px;
+      margin-bottom: 6px;
+    }
+
+    header p {
+      color: #aaa;
+      font-size: 0.95rem;
+      margin-top: 4px;
+    }
+
+    h2 {
+      font-family: var(--font-title);
+      color: var(--accent2);
+      margin-bottom: 10px;
+      text-shadow: 0 0 4px var(--accent2);
+    }
+
+    main {
+      width: 100%;
+      max-width: 900px;
+      display: grid;
+      gap: 30px;
+    }
+
+    .resource-card {
+      background: var(--card);
+      border: 1px solid var(--card-border);
+      border-radius: 8px;
+      padding: 24px;
+      box-shadow: 0 0 5px rgba(8, 247, 254, 0.15);
+      transition: all 0.25s ease;
+    }
+
+    .resource-card:hover {
+      border-color: var(--accent);
+      box-shadow: 0 0 12px rgba(8, 247, 254, 0.35);
+      transform: translateY(-2px);
+    }
+
+    .category {
+      font-family: var(--font-title);
+      color: var(--accent);
+      margin-bottom: 10px;
+      text-transform: uppercase;
+      border-bottom: 1px solid var(--accent2);
+      display: inline-block;
+      padding-bottom: 5px;
+    }
+
+    ul {
+      list-style: none;
+      margin-top: 10px;
+    }
+
+    li {
+      margin-bottom: 8px;
+      line-height: 1.6;
+    }
+
+    a {
+      color: var(--accent-soft);
+      text-decoration: none;
+      transition: 0.3s;
+    }
+
+    a:hover {
+      color: var(--accent);
+    }
+
+    footer {
+      margin-top: 35px;
+      text-align: center;
+      font-size: 0.9rem;
+      color: #666;
+    }
+
+  </style>
+</head>
+
+<body>
+
+  <nav>
+    <a href="index.html">Home</a>
+    <a href="resources.html">Resources</a>
+    <a href="about.html">About</a>
+  </nav>
+
+  <header>
+    <h1>Resources</h1>
+    <p>Handpicked tools, references, and essentials for real network engineering.</p>
+  </header>
+
+  <main>
+
+    <!-- REAL NETWORKING TOOLS -->
+    <div class="resource-card">
+      <div class="category">Network Tools</div>
+      <ul>
+        <li><a href="https://nmap.org/" target="_blank">Nmap</a> — network discovery & topology scanning.</li>
+        <li><a href="https://www.wireshark.org/" target="_blank">Wireshark</a> — protocol analysis & packet inspection.</li>
+        <li><a href="https://iperf.fr/" target="_blank">iperf3</a> — throughput & performance testing.</li>
+        <li><a href="https://github.com/traviscross/mtr" target="_blank">MTR</a> — traceroute + ping for path diagnostics.</li>
+        <li><a href="https://bgp.tools/" target="_blank">BGP.tools</a> — AS lookup, routing tables, global BGP visibility.</li>
+        <li><a href="https://ipinfo.io/" target="_blank">IPinfo</a> — IP metadata and ASN information.</li>
+      </ul>
+    </div>
+
+    <!-- LABS & EMULATION -->
+    <div class="resource-card">
+      <div class="category">Labs & Simulation</div>
+      <ul>
+        <li><a href="https://www.netacad.com/courses/packet-tracer" target="_blank">Cisco Packet Tracer</a> — beginner-friendly network simulation.</li>
+        <li><a href="https://www.gns3.com/" target="_blank">GNS3</a> — powerful open-source network emulator.</li>
+        <li><a href="https://www.eve-ng.net/" target="_blank">EVE-NG</a> — enterprise-grade multi-vendor lab environment.</li>
+        <li><a href="https://containerlab.dev/" target="_blank">Containerlab</a> — L2/L3 network topologies using containers.</li>
+      </ul>
+    </div>
+
+    <!-- DOCUMENTATION & REFERENCES -->
+    <div class="resource-card">
+      <div class="category">Reference Material</div>
+      <ul>
+        <li><a href="https://www.rfc-editor.org/" target="_blank">RFC Editor</a> — official internet standards & protocol specs.</li>
+        <li><a href="https://www.subnet-calculator.com/" target="_blank">Subnet Calculator</a> — fast IP subnet planning.</li>
+        <li><a href="https://developer.cisco.com/docs/" target="_blank">Cisco Docs / DevNet</a> — vendor configuration & API references.</li>
+        <li><a href="https://learningportal.juniper.net/" target="_blank">Juniper Open Learning</a> — free JNCIA material & labs.</li>
+        <li><a href="https://eos.arista.com/" target="_blank">Arista EOS Central</a> — next-gen DC networking documentation.</li>
+      </ul>
+    </div>
+
+    <!-- LEARNING -->
+    <div class="resource-card">
+      <div class="category">Learning</div>
+      <ul>
+        <li><a href="https://www.netacad.com/" target="_blank">Cisco Networking Academy</a> — foundational networking curriculum.</li>
+        <li><a href="https://wiki.wireshark.org/" target="_blank">Wireshark Wiki</a> — protocol breakdowns & dissector insights.</li>
+        <li><a href="https://www.practicalnetworking.net/" target="_blank">Practical Networking</a> — clean explanations of core concepts.</li>
+        <li><a href="https://networklessons.com/" target="_blank">NetworkLessons</a> — vendor-neutral network theory & configs.</li>
+      </ul>
+    </div>
+
+  </main>
+
+  <footer>
+    <p>© 2025 The Network Layer</p>
+  </footer>
+
+</body>
+</html>
