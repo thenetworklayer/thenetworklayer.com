@@ -12,7 +12,6 @@
 <meta name="author" content="The Network Layer">
 <link rel="canonical" href="https://thenetworklayer.com/">
 
- 
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Source+Code+Pro:wght@400;600&display=swap');
 
@@ -129,6 +128,13 @@
       transform: translateY(-2px);
     }
 
+    /* Make full card clickable */
+    .article-link {
+      text-decoration: none;
+      color: inherit;
+      display: block;
+    }
+
     .date {
       font-size: 0.9rem;
       color: #888;
@@ -152,7 +158,6 @@
       border-color: var(--accent);
     }
 
-    
     .filter-bar {
       margin-bottom: 30px;
       text-align: center;
@@ -223,13 +228,15 @@
 
   <main>
 
-    <article data-tag="fundamentals">
-      <h2>An Introduction To The Network Layer</h2>
-      <p class="date">9th December 2025</p>
-      <p>IP Addresses, Routing, and Layer 3 Explained.</p>
-      <span class="tag">Fundamentals</span>
-      <a href="posts/introtonetworklayer.html">Read More →</a>
-    </article>
+    <!-- FULL CARD CLICKABLE VERSION -->
+    <a href="posts/introtonetworklayer.html" class="article-link">
+      <article data-tag="fundamentals">
+        <h2>An Introduction To The Network Layer</h2>
+        <p class="date">9th December 2025</p>
+        <p>IP Addresses, Routing, and Layer 3 Explained.</p>
+        <span class="tag">Fundamentals</span>
+      </article>
+    </a>
 
     <article data-tag="configs">
       <h2>Coming Soon...</h2>
