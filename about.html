@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+ <link rel="icon" type="image/png" href="/favicon.png">
+ 
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>About – The Network Layer</title>
+
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Source+Code+Pro:wght@400;600&display=swap');
+
+    :root {
+      --bg: #080808;
+      --text: #e0e0e0;
+      --accent: #08f7fe;
+      --accent-soft: #45d4dd;
+      --accent2: #f50057;
+      --card: #111;
+      --card-border: #1b1b1b;
+      --font-title: 'Orbitron', sans-serif;
+      --font-body: 'Source Code Pro', monospace;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      background: radial-gradient(circle at top left, #0a0a0a, #000);
+      color: var(--text);
+      font-family: var(--font-body);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 40px 20px;
+      min-height: 100vh;
+    }
+
+    nav {
+      width: 100%;
+      max-width: 900px;
+      display: flex;
+      justify-content: center;
+      gap: 40px;
+      margin-bottom: 22px;
+      border-bottom: 1px solid rgba(255,255,255,0.05);
+      padding-bottom: 10px;
+    }
+
+    nav a {
+      color: var(--accent-soft);
+      font-family: var(--font-title);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      transition: 0.3s;
+    }
+
+    nav a:hover {
+      color: var(--accent);
+    }
+
+    header {
+      text-align: center;
+      margin-bottom: 25px;
+    }
+
+    h1 {
+      font-family: var(--font-title);
+      font-size: 2.4rem;
+      color: var(--accent);
+      text-shadow: 0 0 4px var(--accent);
+      letter-spacing: 2px;
+      margin-bottom: 6px;
+    }
+
+    header p {
+      color: #aaa;
+      font-size: 0.95rem;
+      margin-top: 4px;
+    }
+
+    h2 {
+      font-family: var(--font-title);
+      color: var(--accent2);
+      margin-bottom: 10px;
+      text-shadow: 0 0 4px var(--accent2);
+    }
+
+    main {
+      width: 100%;
+      max-width: 900px;
+      display: grid;
+      gap: 30px;
+    }
+
+    .about-card {
+      background: var(--card);
+      border: 1px solid var(--card-border);
+      border-radius: 8px;
+      padding: 24px;
+      line-height: 1.7;
+      text-align: left;
+      box-shadow: 0 0 5px rgba(8, 247, 254, 0.15);
+      transition: 0.25s ease;
+    }
+
+    .about-card:hover {
+      border-color: var(--accent);
+      box-shadow: 0 0 12px rgba(8, 247, 254, 0.35);
+      transform: translateY(-2px);
+    }
+
+    .spacer {
+      height: 20px;
+      width: 100%;
+    }
+
+    footer {
+      margin-top: 35px;
+      text-align: center;
+      font-size: 0.9rem;
+      color: #666;
+    }
+
+    a {
+      color: var(--accent-soft);
+      text-decoration: none;
+    }
+
+    a:hover {
+      color: var(--accent);
+    }
+  </style>
+</head>
+
+<body>
+
+  <nav>
+    <a href="index.html">Home</a>
+    <a href="resources.html">Resources</a>
+    <a href="about.html">About</a>
+  </nav>
+
+  <header>
+    <h1>About The Network Layer</h1>
+    <p>Exploring networking, cybersecurity, and real hands-on learning.</p>
+  </header>
+
+  <main>
+
+    <div class="about-card">
+      <h2>The Project</h2>
+
+      <p><strong>Welcome to the Network Layer. This is my personal place for three main things:</strong></p>
+
+      <p>
+      1.) Documenting the knowledge I gain as I progress through networking<br>
+      2.) Exploring my progression through my home lab and other projects<br>
+      3.) Sharing my personal experience and suggestions on navigating certs, career paths, and courses
+      </p>
+
+      <div class="spacer"></div>
+
+      <p><strong>As a complete beginner in networking, I might make mistakes; I appreciate any feedback.</strong><br>
+      Feel free to reach out to me at: <a href="mailto:thenetworklayer@proton.me">thenetworklayer@proton.me</a></p>
+
+    </div>
+
+    <div class="about-card">
+      <h2>The Vision</h2>
+
+      <p><strong>This site is meant to be a place to store my ideas, experiments, and discoveries. Everything will stay free with no ads or paywalls. My goal is to make learning networking feel clear, practical, and accessible to anyone.</strong></p>
+
+    </div>
+
+  </main>
+
+  <footer>
+    <p>© 2025 The Network Layer</p>
+  </footer>
+
+</body>
+</html>
