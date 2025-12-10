@@ -73,6 +73,22 @@
       margin-bottom: 25px;
     }
 
+    /* ADDED — title container using flex */
+    .title-row {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      justify-content: center;
+    }
+
+    /* ADDED — favicon styling */
+    .title-icon {
+      width: 38px;
+      height: 38px;
+      border-radius: 6px;
+      box-shadow: 0 0 8px #08f7fe55;
+    }
+
     h1 {
       font-family: var(--font-title);
       font-size: 2.4rem;
@@ -128,7 +144,6 @@
       transform: translateY(-2px);
     }
 
-    /* Make full card clickable */
     .article-link {
       text-decoration: none;
       color: inherit;
@@ -213,7 +228,13 @@
   </nav>
 
   <header>
-    <h1>The Network Layer</h1>
+
+    <!-- ADDED: icon + title together -->
+    <div class="title-row">
+      <img src="favicon.png" class="title-icon" alt="">
+      <h1>The Network Layer</h1>
+    </div>
+
     <p>Modern Networking, Explained Simply.</p>
   </header>
 
@@ -228,7 +249,6 @@
 
   <main>
 
-    <!-- FULL CARD CLICKABLE VERSION -->
     <a href="posts/introtonetworklayer.html" class="article-link">
       <article data-tag="fundamentals">
         <h2>An Introduction To The Network Layer</h2>
