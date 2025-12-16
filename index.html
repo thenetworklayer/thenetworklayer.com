@@ -128,8 +128,10 @@
     main {
       width: 100%;
       max-width: 900px;
+      /* FIX: Removing grid-template-columns ensures a single-column flow */
       display: grid;
       gap: 30px;
+      align-items: start;
     }
 
     article {
@@ -232,7 +234,6 @@
 
   <header>
 
-    <!-- ADDED: icon + title together -->
     <div class="title-row">
       <img src="favicon.png" class="title-icon" alt="">
       <h1>The Network Layer</h1>
@@ -252,6 +253,15 @@
 
   <main>
 
+        <a href="posts/networkingroadmap.html" class="article-link">
+      <article data-tag="career">
+        <h2>Breaking Into Networking: My Roadmap</h2>
+        <p class="date">16th December 2025</p>
+        <p>Goals, Certifications, and Hands-on Experience</p>
+        <span class="tag">Career & Learning</span>
+      </article>
+    </a>
+
     <a href="posts/introtonetworklayer.html" class="article-link">
       <article data-tag="fundamentals">
         <h2>An Introduction To The Network Layer</h2>
@@ -260,15 +270,12 @@
         <span class="tag">Fundamentals</span>
       </article>
     </a>
+    
+
 
     <article data-tag="configs">
       <h2>Coming Soon...</h2>
       <span class="tag">Configs & Labs</span>
-    </article>
-
-    <article data-tag="career">
-      <h2>Coming Soon...</h2>
-      <span class="tag">Career & Learning</span>
     </article>
 
   </main>
@@ -278,24 +285,26 @@
   </footer>
 
   <script>
-    const buttons = document.querySelectorAll('.filter-btn');
-    const articles = document.querySelectorAll('article');
+  const buttons = document.querySelectorAll('.filter-btn');
+  const articles = document.querySelectorAll('article');
 
-    buttons.forEach(btn => {
-      btn.addEventListener('click', () => {
-        buttons.forEach(b => b.classList.remove('active'));
-        btn.classList.add('active');
-        const filter = btn.dataset.filter;
+  buttons.forEach(btn => {
+    btn.addEventListener('click', () => {
+      buttons.forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      const filter = btn.dataset.filter;
 
-        articles.forEach(article => {
-          article.style.display =
-            (filter === 'all' || article.dataset.tag === filter)
-              ? 'block'
-              : 'none';
-        });
+      articles.forEach(article => {
+        const wrapper = article.closest('.article-link') || article; // <a> wrapper or the article itself
+        wrapper.style.display =
+          (filter === 'all' || article.dataset.tag === filter)
+            ? 'block'
+            : 'none';
       });
     });
-  </script>
+  });
+</script>
+
 
 </body>
 </html>
