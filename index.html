@@ -1,225 +1,122 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-
-  <link rel="icon" type="image/png" href="/favicon.png?v=2">
-  <link rel="apple-touch-icon" href="/favicon.png?v=2">
-
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>The Network Layer</title>
-  <meta name="description" content="Clear, simple explanations of modern networking. Tutorials, labs, configs, and fundamentals for learners and aspiring network technicians.">
-  <meta name="keywords" content="networking, network fundamentals, IP, routing, labs, configs, homelab, learning networking">
-  <meta name="author" content="The Network Layer">
-  <link rel="canonical" href="https://thenetworklayer.com/">
-
+  <title>The Network Layer | Home</title>
   <style>
-
-
-    @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Source+Code+Pro:wght@400;600&display=swap');
+    @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&display=swap');
 
     :root {
-      --bg: #080808;
-      --text: #e0e0e0;
-      --accent: #08f7fe;
-      --accent-soft: #45d4dd;
-      --accent2: #f50057;
-      --card: #111;
-      --card-border: #1b1b1b;
-      --font-title: 'Orbitron', sans-serif;
-      --font-body: 'Source Code Pro', monospace;
+      --bg: #121212;         /* Deep charcoal */
+      --text: #d1d1d1;       /* Soft grey-white */
+      --dim: #666666;        /* De-emphasized text */
+      --accent: #e1ad01;     /* Professional amber */
+      --font-mono: 'JetBrains Mono', monospace;
     }
 
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
 
     body {
-      background: radial-gradient(circle at top left, #0a0a0a, #000);
+      background-color: var(--bg);
       color: var(--text);
-      font-family: var(--font-body);
+      font-family: var(--font-mono);
+      line-height: 1.6;
       display: flex;
       flex-direction: column;
       align-items: center;
-      padding: 40px 20px;
+      padding: 60px 20px;
       min-height: 100vh;
     }
 
-    nav {
-      width: 100%;
-      max-width: 900px;
-      display: flex;
-      justify-content: center;
-      gap: 40px;
-      margin-bottom: 22px;
-      border-bottom: 1px solid rgba(255,255,255,0.05);
-      padding-bottom: 10px;
+    /* --- MINIMAL NAV --- */
+    nav { 
+      width: 100%; 
+      max-width: 750px; 
+      margin-bottom: 60px; 
     }
-
     nav a {
-      color: var(--accent-soft);
-      font-family: var(--font-title);
+      color: var(--dim);
+      text-decoration: none;
+      margin-right: 30px;
+      font-size: 0.85rem;
       text-transform: uppercase;
       letter-spacing: 1px;
-      transition: 0.3s;
-      text-decoration: none;
+      transition: color 0.2s;
     }
+    nav a:hover { color: var(--accent); }
+    nav a.active { color: var(--text); border-bottom: 1px solid var(--accent); }
 
-    nav a:hover {
-      color: var(--accent);
+    /* --- HEADER --- */
+    header { 
+      width: 100%; 
+      max-width: 750px; 
+      margin-bottom: 50px; 
+      border-left: 3px solid var(--accent); 
+      padding-left: 20px;
     }
-
-    header {
-      text-align: center;
-      margin-bottom: 25px;
+    h1 { 
+      font-size: 1.6rem; 
+      font-weight: 500; 
+      color: var(--text);
+      letter-spacing: -0.5px;
+      text-transform: uppercase;
     }
+    .status-line { font-size: 0.75rem; color: var(--dim); margin-top: 5px; text-transform: uppercase; }
 
-    /* ADDED — title container using flex */
-    .title-row {
-      display: inline-flex;
-      align-items: center;
-      gap: 12px;
-      justify-content: center;
+    /* --- FILTER BAR --- */
+    .filter-bar { 
+      width: 100%; 
+      max-width: 750px; 
+      margin-bottom: 40px; 
+      display: flex; 
+      gap: 20px; 
+      flex-wrap: wrap; 
+      border-bottom: 1px solid #222;
+      padding-bottom: 15px;
     }
-
-    /* ADDED — favicon styling */
-    .title-icon {
-      width: 38px;
-      height: 38px;
-      border-radius: 6px;
-      box-shadow: 0 0 8px #08f7fe55;
-    }
-
-    h1 {
-      font-family: var(--font-title);
-      font-size: 2.4rem;
-      color: var(--accent);
-      text-shadow: 0 0 4px var(--accent);
-      letter-spacing: 2px;
-      margin-bottom: 5px;
-    }
-
-    header p {
-      color: #aaa;
-      font-size: 0.95rem;
-      margin-top: 4px;
-    }
-
-    h2 {
-      font-family: var(--font-title);
-      color: var(--accent2);
-      margin-bottom: 10px;
-      text-shadow: 0 0 4px var(--accent2);
-    }
-
-    .section-title {
-      font-family: var(--font-title);
-      font-size: 1.1rem;
-      color: #aaa;
-      margin-bottom: 15px;
-      letter-spacing: 1px;
-      text-align: left;
-      width: 100%;
-      max-width: 900px;
-    }
-
-    main {
-      width: 100%;
-      max-width: 900px;
-      /* FIX: Removing grid-template-columns ensures a single-column flow */
-      display: grid;
-      gap: 30px;
-      align-items: start;
-    }
-
-    article {
-      background: var(--card);
-      border: 1px solid var(--card-border);
-      border-radius: 8px;
-      padding: 24px;
-      box-shadow: 0 0 5px rgba(8, 247, 254, 0.15);
-      transition: all 0.25s ease;
-    }
-
-    article:hover {
-      border-color: var(--accent);
-      box-shadow: 0 0 12px rgba(8, 247, 254, 0.35);
-      transform: translateY(-2px);
-    }
-
-    .article-link {
-      text-decoration: none;
-      color: inherit;
-      display: block;
-    }
-
-    .date {
-      font-size: 0.9rem;
-      color: #888;
-      margin-bottom: 10px;
-    }
-
-    .tag {
-      display: inline-block;
-      margin-top: 10px;
-      padding: 3px 8px;
-      border: 1px solid rgba(255,255,255,0.15);
-      border-radius: 4px;
-      font-size: 0.8rem;
-      color: var(--accent-soft);
-      transition: 0.3s;
-    }
-
-    .tag:hover {
-      background: var(--accent);
-      color: #000;
-      border-color: var(--accent);
-    }
-
-    .filter-bar {
-      margin-bottom: 30px;
-      text-align: center;
-      display: flex;
-      justify-content: center;
-      flex-wrap: wrap;
-      gap: 10px;
-    }
-
     .filter-btn {
-      padding: 6px 14px;
-      height: 38px;
-      border: 1px solid rgba(255,255,255,0.1);
-      border-radius: 4px;
-      background: #101010;
-      color: var(--accent-soft);
-      font-family: var(--font-title);
-      font-size: 0.85rem;
+      background: transparent;
+      border: none;
+      color: var(--dim);
+      font-family: var(--font-mono);
       cursor: pointer;
-      transition: 0.3s;
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      transition: color 0.2s;
+    }
+    .filter-btn.active { color: var(--accent); font-weight: 500; }
+    .filter-btn:hover { color: var(--text); }
+
+    /* --- ARTICLE FEED --- */
+    main { width: 100%; max-width: 750px; }
+    .article-link { text-decoration: none; color: inherit; display: block; margin-bottom: 45px; }
+    
+    article {
+      position: relative;
+      transition: transform 0.2s ease;
+    }
+    .article-link:hover article { transform: translateX(5px); }
+    
+    h2 { font-size: 1.15rem; margin-bottom: 8px; color: var(--text); font-weight: 500; }
+    .meta { font-size: 0.75rem; color: var(--dim); margin-bottom: 10px; }
+    .summary { font-size: 0.95rem; color: #aaa; max-width: 600px; }
+    .tag-text { color: var(--accent); font-size: 0.7rem; margin-top: 12px; display: block; opacity: 0.8; }
+
+    footer { 
+      margin-top: auto; 
+      padding-top: 40px; 
+      width: 100%; 
+      max-width: 750px; 
+      font-size: 0.75rem; 
+      color: var(--dim);
+      border-top: 1px solid #222;
     }
 
-    .filter-btn.active,
-    .filter-btn:hover {
-      background: var(--accent);
-      color: #000;
-    }
-
-    footer {
-      margin-top: 35px;
-      text-align: center;
-      font-size: 0.9rem;
-      color: #666;
-    }
-
-    a {
-      color: var(--accent-soft);
-      text-decoration: none;
-    }
-
-    a:hover {
-      color: var(--accent);
+    @media (max-width: 600px) {
+      body { padding: 40px 20px; }
+      h1 { font-size: 1.3rem; }
     }
   </style>
 </head>
@@ -227,84 +124,86 @@
 <body>
 
   <nav>
-    <a href="index.html">Home</a>
+    <a href="index.html" class="active">Home</a>
     <a href="resources.html">Resources</a>
     <a href="about.html">About</a>
   </nav>
 
   <header>
-
-    <div class="title-row">
-      <img src="favicon.png" class="title-icon" alt="">
-      <h1>The Network Layer</h1>
-    </div>
-
-    <p>Modern Networking, Explained Simply.</p>
+    <h1>The Network Layer</h1>
+    <div class="status-line">Node: Primary-Terminal // Session: 0x821</div>
+    <p id="line1" style="font-size: 0.9rem; margin-top: 15px; min-height: 1.5em;"></p>
   </header>
 
   <div class="filter-bar">
-    <button class="filter-btn active" data-filter="all">All</button>
+    <button class="filter-btn active" data-filter="all">All_Categories</button>
     <button class="filter-btn" data-filter="fundamentals">Fundamentals</button>
-    <button class="filter-btn" data-filter="configs">Configs & Labs</button>
-    <button class="filter-btn" data-filter="career">Career & Learning</button>
+    <button class="filter-btn" data-filter="configs">Labs</button>
+    <button class="filter-btn" data-filter="career">Career</button>
   </div>
 
-  <div class="section-title">Latest Posts</div>
-
   <main>
-
-        <a href="posts/networkingroadmap.html" class="article-link">
+    <a href="posts/networkingroadmap.html" class="article-link">
       <article data-tag="career">
+        <div class="meta">16-12-2025 // log_id: 002</div>
         <h2>Breaking Into Networking: My Roadmap</h2>
-        <p class="date">16th December 2025</p>
-        <p>Goals, Certifications, and Hands-on Experience</p>
-        <span class="tag">Career & Learning</span>
+        <p class="summary">A strategic look at certifications and hands-on experience required for the modern network engineer.</p>
+        <span class="tag-text">#CAREER_LOG</span>
       </article>
     </a>
 
     <a href="posts/introtonetworklayer.html" class="article-link">
       <article data-tag="fundamentals">
+        <div class="meta">09-12-2025 // log_id: 001</div>
         <h2>An Introduction To The Network Layer</h2>
-        <p class="date">9th December 2025</p>
-        <p>IP Addresses, Routing, and Layer 3 Explained.</p>
-        <span class="tag">Fundamentals</span>
+        <p class="summary">Analyzing the mechanics of IP addressing, routing protocols, and Layer 3 encapsulation.</p>
+        <span class="tag-text">#OSI_LAYER_3</span>
       </article>
     </a>
-    
 
-
-    <article data-tag="configs">
-      <h2>Coming Soon...</h2>
-      <span class="tag">Configs & Labs</span>
+    <article data-tag="configs" style="opacity: 0.5;">
+      <div class="meta">PENDING // log_id: NULL</div>
+      <h2>Upcoming Laboratory Scenarios</h2>
+      <p class="summary">Coming soon...</p>
+      <span class="tag-text">#SYSTEM_IDLE</span>
     </article>
-
   </main>
 
   <footer>
-    <p>© 2025 The Network Layer</p>
+    <p>© 2025 THE NETWORK LAYER</p>
   </footer>
 
   <script>
-  const buttons = document.querySelectorAll('.filter-btn');
-  const articles = document.querySelectorAll('article');
+    /* Filter Logic */
+    const buttons = document.querySelectorAll('.filter-btn');
+    const articles = document.querySelectorAll('article');
 
-  buttons.forEach(btn => {
-    btn.addEventListener('click', () => {
-      buttons.forEach(b => b.classList.remove('active'));
-      btn.classList.add('active');
-      const filter = btn.dataset.filter;
-
-      articles.forEach(article => {
-        const wrapper = article.closest('.article-link') || article; // <a> wrapper or the article itself
-        wrapper.style.display =
-          (filter === 'all' || article.dataset.tag === filter)
-            ? 'block'
-            : 'none';
+    buttons.forEach(btn => {
+      btn.addEventListener('click', () => {
+        buttons.forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        const filter = btn.dataset.filter;
+        articles.forEach(article => {
+          const wrapper = article.closest('.article-link') || article; 
+          wrapper.style.display = (filter === 'all' || article.dataset.tag === filter) ? 'block' : 'none';
+        });
       });
     });
-  });
-</script>
 
+    /* Typewriter Logic (Simplified) */
+    const text1 = "> Accessing CCNA notes, lab configurations, and career logs...";
+    let i = 0;
+    const el = document.getElementById("line1");
+    
+    function type() {
+      if (i < text1.length) {
+        el.innerHTML += text1.charAt(i);
+        i++;
+        setTimeout(type, 25);
+      }
+    }
 
+    window.onload = type;
+  </script>
 </body>
 </html>
