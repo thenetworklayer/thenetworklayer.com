@@ -1,26 +1,21 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-
- <link rel="icon" type="image/png" href="/favicon.png">
- 
+  <link rel="icon" type="image/png" href="/favicon.png">
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>About – The Network Layer</title>
 
   <style>
-    @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Source+Code+Pro:wght@400;600&display=swap');
+    /* Using the clean professional monospace font */
+    @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&display=swap');
 
     :root {
-      --bg: #080808;
-      --text: #e0e0e0;
-      --accent: #08f7fe;
-      --accent-soft: #45d4dd;
-      --accent2: #f50057;
-      --card: #111;
-      --card-border: #1b1b1b;
-      --font-title: 'Orbitron', sans-serif;
-      --font-body: 'Source Code Pro', monospace;
+      --bg: #121212;         /* Deep charcoal */
+      --text: #d1d1d1;       /* Soft grey-white */
+      --dim: #666666;        /* De-emphasized text */
+      --accent: #e1ad01;     /* Professional amber */
+      --font-mono: 'JetBrains Mono', monospace;
     }
 
     * {
@@ -30,88 +25,98 @@
     }
 
     body {
-      background: radial-gradient(circle at top left, #0a0a0a, #000);
+      background-color: var(--bg);
       color: var(--text);
-      font-family: var(--font-body);
+      font-family: var(--font-mono);
+      line-height: 1.8;
       display: flex;
       flex-direction: column;
       align-items: center;
-      padding: 40px 20px;
+      padding: 60px 20px;
       min-height: 100vh;
     }
 
-    nav {
-      width: 100%;
-      max-width: 900px;
+    /* --- MINIMAL NAV --- */
+    nav { 
+      width: 100%; 
+      max-width: 750px; 
+      margin-bottom: 60px; 
       display: flex;
-      justify-content: center;
-      gap: 40px;
-      margin-bottom: 22px;
-      border-bottom: 1px solid rgba(255,255,255,0.05);
-      padding-bottom: 10px;
+      justify-content: flex-start; /* Aligned to match the header border */
+      gap: 30px;
     }
 
     nav a {
-      color: var(--accent-soft);
-      font-family: var(--font-title);
+      color: var(--dim);
+      text-decoration: none;
+      font-size: 0.85rem;
       text-transform: uppercase;
       letter-spacing: 1px;
-      transition: 0.3s;
+      transition: color 0.2s;
     }
 
     nav a:hover {
       color: var(--accent);
     }
-
-    header {
-      text-align: center;
-      margin-bottom: 25px;
+    
+    /* Marking About as active */
+    nav a[href="about.html"] {
+      color: var(--text);
+      border-bottom: 1px solid var(--accent);
     }
 
-    h1 {
-      font-family: var(--font-title);
-      font-size: 2.4rem;
-      color: var(--accent);
-      text-shadow: 0 0 4px var(--accent);
-      letter-spacing: 2px;
-      margin-bottom: 6px;
+    /* --- HEADER --- */
+    header { 
+      width: 100%; 
+      max-width: 750px; 
+      margin-bottom: 50px; 
+      border-left: 3px solid var(--accent); 
+      padding-left: 20px;
+      text-align: left; /* Changed from center for minimalist terminal feel */
     }
 
-    header p {
-      color: #aaa;
-      font-size: 0.95rem;
-      margin-top: 4px;
+    h1 { 
+      font-size: 1.6rem; 
+      font-weight: 500; 
+      color: var(--text);
+      letter-spacing: -0.5px;
+      text-transform: uppercase;
+    }
+
+    /* --- MAIN CONTENT --- */
+    main {
+      width: 100%;
+      max-width: 750px;
+      display: grid;
+      gap: 50px; /* Increased gap for breathability */
     }
 
     h2 {
-      font-family: var(--font-title);
-      color: var(--accent2);
-      margin-bottom: 10px;
-      text-shadow: 0 0 4px var(--accent2);
-    }
-
-    main {
-      width: 100%;
-      max-width: 900px;
-      display: grid;
-      gap: 30px;
+      font-size: 0.9rem; 
+      text-transform: uppercase; 
+      color: var(--accent); 
+      margin-bottom: 20px; 
+      letter-spacing: 2px;
+      font-weight: 500;
     }
 
     .about-card {
-      background: var(--card);
-      border: 1px solid var(--card-border);
-      border-radius: 8px;
-      padding: 24px;
-      line-height: 1.7;
+      background: transparent; /* Removed card background for minimalism */
+      border: none;
+      padding: 0;
+      line-height: 1.8;
       text-align: left;
-      box-shadow: 0 0 5px rgba(8, 247, 254, 0.15);
-      transition: 0.25s ease;
     }
 
-    .about-card:hover {
-      border-color: var(--accent);
-      box-shadow: 0 0 12px rgba(8, 247, 254, 0.35);
-      transform: translateY(-2px);
+    /* Subtle entry styling to replace the card boxes */
+    .about-card p {
+      margin-bottom: 20px;
+      font-size: 0.95rem;
+    }
+
+    strong {
+      color: #fff;
+      font-weight: 500;
     }
 
     .spacer {
@@ -119,20 +124,31 @@
       width: 100%;
     }
 
+    /* --- FOOTER --- */
     footer {
-      margin-top: 35px;
-      text-align: center;
-      font-size: 0.9rem;
-      color: #666;
+      margin-top: auto;
+      padding-top: 40px;
+      width: 100%;
+      max-width: 750px;
+      font-size: 0.75rem;
+      color: var(--dim);
+      border-top: 1px solid #222;
     }
 
     a {
-      color: var(--accent-soft);
+      color: var(--accent);
       text-decoration: none;
+      transition: opacity 0.2s;
     }
 
     a:hover {
-      color: var(--accent);
+      text-decoration: underline;
+    }
+
+    @media (max-width: 600px) {
+      body { padding: 40px 20px; }
+      h1 { font-size: 1.3rem; }
+      nav { gap: 20px; }
     }
   </style>
 </head>
@@ -181,7 +197,7 @@
   </main>
 
   <footer>
-    <p>© 2025 The Network Layer</p>
+    <p>© 2025 The Network Layer | System Profile: Documentation</p>
   </footer>
 
 </body>
