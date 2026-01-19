@@ -167,8 +167,7 @@
   <footer>
     <p>© 2025 THE NETWORK LAYER</p>
   </footer>
-
-  <script>
+<script>
     /* Typewriter Logic */
     const lines = [
       "> Welcome to TheNetworkLayer.com",
@@ -194,8 +193,35 @@
       }
     }
 
+    /* Filter Logic */
+    const filterButtons = document.querySelectorAll('.filter-btn');
+    const articles = document.querySelectorAll('main > a, main > article');
+
+    filterButtons.forEach(button => {
+      button.addEventListener('click', () => {
+        // 1. Update active button UI
+        filterButtons.forEach(btn => btn.classList.remove('active'));
+        button.classList.add('active');
+
+        // 2. Get the filter value
+        const filterValue = button.getAttribute('data-filter');
+
+        // 3. Show/Hide articles
+        articles.forEach(item => {
+          // Note: we check the 'article' tag even if it's wrapped in an <a> tag
+          const article = item.tagName === 'A' ? item.querySelector('article') : item;
+          const articleTag = article.getAttribute('data-tag');
+
+          if (filterValue === 'all' || filterValue === articleTag) {
+            item.style.display = 'block';
+          } else {
+            item.style.display = 'none';
+          }
+        });
+      });
+    });
+
     window.onload = type;
   </script>
-
 </body>
 </html>
