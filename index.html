@@ -4,18 +4,14 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>The Network Layer | Home</title>
-
-  <link rel="icon" type="image/png" href="/favicon.png">
-
-  
   <style>
     @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&display=swap');
 
     :root {
-      --bg: #121212;         /* Deep charcoal */
-      --text: #d1d1d1;       /* Soft grey-white */
-      --dim: #666666;        /* De-emphasized text */
-      --accent: #e1ad01;     /* Professional amber */
+      --bg: #121212;
+      --text: #d1d1d1;
+      --dim: #666666;
+      --accent: #e1ad01;
       --font-mono: 'JetBrains Mono', monospace;
     }
 
@@ -33,12 +29,8 @@
       min-height: 100vh;
     }
 
-    /* --- MINIMAL NAV --- */
-    nav { 
-      width: 100%; 
-      max-width: 750px; 
-      margin-bottom: 60px; 
-    }
+    nav { width: 100%; max-width: 750px; margin-bottom: 60px; }
+
     nav a {
       color: var(--dim);
       text-decoration: none;
@@ -48,10 +40,10 @@
       letter-spacing: 1px;
       transition: color 0.2s;
     }
+
     nav a:hover { color: var(--accent); }
     nav a.active { color: var(--text); border-bottom: 1px solid var(--accent); }
 
-    /* --- HEADER --- */
     header { 
       width: 100%; 
       max-width: 750px; 
@@ -59,16 +51,21 @@
       border-left: 3px solid var(--accent); 
       padding-left: 20px;
     }
+
     h1 { 
       font-size: 1.6rem; 
       font-weight: 500; 
-      color: var(--text);
       letter-spacing: -0.5px;
       text-transform: uppercase;
     }
-    .status-line { font-size: 0.75rem; color: var(--dim); margin-top: 5px; text-transform: uppercase; }
 
-    /* --- FILTER BAR --- */
+    .status-line {
+      font-size: 0.75rem;
+      color: var(--dim);
+      margin-top: 5px;
+      text-transform: uppercase;
+    }
+
     .filter-bar { 
       width: 100%; 
       max-width: 750px; 
@@ -79,6 +76,7 @@
       border-bottom: 1px solid #222;
       padding-bottom: 15px;
     }
+
     .filter-btn {
       background: transparent;
       border: none;
@@ -88,39 +86,31 @@
       font-size: 0.8rem;
       text-transform: uppercase;
       letter-spacing: 1px;
-      transition: color 0.2s;
     }
+
     .filter-btn.active { color: var(--accent); font-weight: 500; }
     .filter-btn:hover { color: var(--text); }
 
-    /* --- ARTICLE FEED --- */
     main { width: 100%; max-width: 750px; }
+
     .article-link { text-decoration: none; color: inherit; display: block; margin-bottom: 45px; }
-    
-    article {
-      position: relative;
-      transition: transform 0.2s ease;
-    }
+
+    article { transition: transform 0.2s ease; }
     .article-link:hover article { transform: translateX(5px); }
-    
-    h2 { font-size: 1.15rem; margin-bottom: 8px; color: var(--text); font-weight: 500; }
+
+    h2 { font-size: 1.15rem; margin-bottom: 8px; font-weight: 500; }
     .meta { font-size: 0.75rem; color: var(--dim); margin-bottom: 10px; }
     .summary { font-size: 0.95rem; color: #aaa; max-width: 600px; }
-    .tag-text { color: var(--accent); font-size: 0.7rem; margin-top: 12px; display: block; opacity: 0.8; }
+    .tag-text { color: var(--accent); font-size: 0.7rem; margin-top: 12px; display: block; }
 
-    footer { 
-      margin-top: auto; 
-      padding-top: 40px; 
-      width: 100%; 
-      max-width: 750px; 
-      font-size: 0.75rem; 
+    footer {
+      margin-top: auto;
+      padding-top: 40px;
+      width: 100%;
+      max-width: 750px;
+      font-size: 0.75rem;
       color: var(--dim);
       border-top: 1px solid #222;
-    }
-
-    @media (max-width: 600px) {
-      body { padding: 40px 20px; }
-      h1 { font-size: 1.3rem; }
     }
   </style>
 </head>
@@ -136,7 +126,7 @@
   <header>
     <h1>The Network Layer</h1>
     <div class="status-line">Node: Primary-Terminal // Session: 0x821</div>
-    <p id="line1" style="font-size: 0.9rem; margin-top: 15px; min-height: 1.5em;"></p>
+    <p id="line1" style="font-size: 0.9rem; margin-top: 15px; min-height: 3em;"></p>
   </header>
 
   <div class="filter-bar">
@@ -147,6 +137,7 @@
   </div>
 
   <main>
+    <!-- BLOG POSTS UNCHANGED -->
     <a href="posts/networkingroadmap.html" class="article-link">
       <article data-tag="career">
         <div class="meta">16-12-2025 // log_id: 002</div>
@@ -178,36 +169,33 @@
   </footer>
 
   <script>
-    /* Filter Logic */
-    const buttons = document.querySelectorAll('.filter-btn');
-    const articles = document.querySelectorAll('article');
+    /* Typewriter Logic */
+    const lines = [
+      "> Welcome to TheNetworkLayer.com",
+      "> A structured repository of networking fundamentals, labs and career notes."
+    ];
 
-    buttons.forEach(btn => {
-      btn.addEventListener('click', () => {
-        buttons.forEach(b => b.classList.remove('active'));
-        btn.classList.add('active');
-        const filter = btn.dataset.filter;
-        articles.forEach(article => {
-          const wrapper = article.closest('.article-link') || article; 
-          wrapper.style.display = (filter === 'all' || article.dataset.tag === filter) ? 'block' : 'none';
-        });
-      });
-    });
-
-    /* Typewriter Logic (Simplified) */
-    const text1 = "> Accessing CCNA notes, lab configurations, and career logs...";
-    let i = 0;
     const el = document.getElementById("line1");
-    
+    let lineIndex = 0;
+    let charIndex = 0;
+
     function type() {
-      if (i < text1.length) {
-        el.innerHTML += text1.charAt(i);
-        i++;
-        setTimeout(type, 25);
+      if (lineIndex < lines.length) {
+        if (charIndex < lines[lineIndex].length) {
+          el.innerHTML += lines[lineIndex].charAt(charIndex);
+          charIndex++;
+          setTimeout(type, 25);
+        } else {
+          el.innerHTML += "<br>";
+          lineIndex++;
+          charIndex = 0;
+          setTimeout(type, 400);
+        }
       }
     }
 
     window.onload = type;
   </script>
+
 </body>
 </html>
