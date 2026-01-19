@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <link rel="icon" type="image/png" href="/favicon.png">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Cisco Packet Tracer: A Beginner’s Introduction - The Network Layer</title>
+
+  <meta name="description" content="A beginner's guide to Cisco Packet Tracer, covering network simulation, routers, switches, and end devices for CCNA students.">
+  <link rel="canonical" href="https://thenetworklayer.com/posts/packet-tracer-intro.html">
+
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&display=swap');
+
+    :root {
+      --bg: #121212;
+      --text: #d1d1d1;
+      --dim: #666666;
+      --accent: #e1ad01;
+      --font-mono: 'JetBrains Mono', monospace;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      background-color: var(--bg);
+      color: var(--text);
+      font-family: var(--font-mono);
+      line-height: 1.8;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 60px 20px;
+      min-height: 100vh;
+    }
+
+    /* --- MINIMAL NAV --- */
+    nav { 
+      width: 100%; 
+      max-width: 750px; 
+      margin-bottom: 60px; 
+      display: flex;
+      justify-content: flex-start;
+      gap: 30px;
+    }
+
+    nav a {
+      color: var(--dim);
+      text-decoration: none;
+      font-size: 0.85rem;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      transition: color 0.2s;
+    }
+
+    nav a:hover { color: var(--accent); }
+
+    /* --- HEADER --- */
+    header { 
+      width: 100%; 
+      max-width: 750px; 
+      margin-bottom: 50px; 
+      border-left: 3px solid var(--accent); 
+      padding-left: 20px;
+    }
+
+    h1 { 
+      font-size: 1.6rem; 
+      font-weight: 500; 
+      color: #fff;
+      letter-spacing: -0.5px;
+      line-height: 1.3;
+      margin-bottom: 10px;
+    }
+
+    .date {
+      color: var(--accent);
+      font-size: 0.8rem;
+      margin-top: 5px;
+      opacity: 0.8;
+    }
+
+    /* --- SECTION NAV BUTTONS --- */
+    .jump-nav {
+      width: 100%;
+      max-width: 750px;
+      margin-bottom: 40px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .jump-btn {
+      background: #1a1a1a;
+      color: var(--dim);
+      border: 1px solid #222;
+      padding: 5px 12px;
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      text-decoration: none;
+      transition: all 0.2s;
+      text-transform: uppercase;
+    }
+
+    .jump-btn:hover {
+      border-color: var(--accent);
+      color: var(--accent);
+    }
+
+    /* --- MAIN CONTENT --- */
+    main {
+      width: 100%;
+      max-width: 750px;
+    }
+
+    p {
+      margin-bottom: 20px;
+      font-size: 0.95rem;
+    }
+
+    .section {
+      margin-bottom: 50px;
+    }
+
+    h2.section-title {
+      font-size: 0.85rem; 
+      text-transform: uppercase; 
+      color: var(--accent); 
+      margin-bottom: 20px; 
+      letter-spacing: 2px;
+      font-weight: 500;
+      border-bottom: 1px solid #222;
+      padding-bottom: 5px;
+    }
+
+    .osi-list {
+      list-style: none;
+      padding-left: 20px;
+      margin-bottom: 20px;
+    }
+
+    .osi-list li {
+      margin-bottom: 5px;
+      font-size: 0.95rem;
+      position: relative;
+    }
+    
+    .osi-list li::before {
+      content: "—";
+      position: absolute;
+      left: -20px;
+      color: var(--dim);
+    }
+
+    /* FIX: Image locations more room, own line */
+    .blog-image {
+      width: 100%;
+      max-width: 100%;
+      height: auto;
+      border: 1px solid #222;
+      display: block;
+      margin: 40px 0; /* Increased spacing */
+    }
+
+    .codeish {
+      font-family: var(--font-mono);
+      color: var(--accent);
+      background: #1a1a1a;
+      padding: 4px 10px;
+      font-size: 0.85rem;
+      display: inline-block;
+      border: 1px solid #222;
+      margin: 10px 0;
+    }
+
+    /* --- FIXED BACK TO TOP BUTTON --- */
+    .back-to-top {
+      position: fixed;
+      bottom: 30px;
+      right: 30px;
+      background: #1a1a1a;
+      border: 1px solid var(--accent);
+      color: var(--accent);
+      padding: 10px 15px;
+      text-decoration: none;
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      transition: opacity 0.3s;
+      z-index: 100;
+    }
+
+    .back-to-top:hover {
+      background: var(--accent);
+      color: var(--bg);
+    }
+
+    footer {
+      margin-top: 40px;
+      padding-top: 40px;
+      width: 100%;
+      max-width: 750px;
+      font-size: 0.75rem;
+      color: var(--dim);
+      border-top: 1px solid #222;
+    }
+
+    @media (max-width: 600px) {
+      body { padding: 40px 20px; }
+      h1 { font-size: 1.3rem; }
+      .back-to-top { bottom: 20px; right: 20px; padding: 8px 12px; }
+    }
+  </style>
+</head>
+
+<body id="top">
+
+  <nav>
+    <a href="/index.html">Home</a>
+    <a href="/resources.html">Resources</a>
+    <a href="/about.html">About</a>
+  </nav>
+
+  <header>
+    <h1>Cisco Packet Tracer: A Beginner’s Introduction</h1>
+    <p class="subtitle">Simulation, Networking Devices, and Building Labs</p>
+    <p class="date">19th January 2026</p>
+  </header>
+
+  <div class="jump-nav">
+    <a href="#intro" class="jump-btn">Introduction</a>
+    <a href="#devices" class="jump-btn">Devices</a>
+    <a href="#hardware" class="jump-btn">Hardware</a>
+    <a href="#cables" class="jump-btn">Cables</a>
+    <a href="#topology" class="jump-btn">Topology</a>
+    <a href="#simulation" class="jump-btn">Simulation</a>
+  </div>
+
+  <main>
+
+    <section class="section" id="intro">
+      <h2 class="section-title">What is Cisco packet tracer?</h2>
+      <p>Cisco packet tracer is a network simulation tool created by Cisco. It allows you to design, build and test networks without needing any physical hardware.</p>
+      <p>For anyone studying for the CCNA, packet tracer is one of the most important tools you'll use, it allows you to:</p>
+      <ul class="osi-list">
+        <li>test out concepts you're unfamiliar with</li>
+        <li>apply theory to a simulated, hands-on environment</li>
+        <li>Break things safely and understand why they broke</li>
+      </ul>
+      <p>Instead of pure theory, this lets you see networks hands-on.</p>
+      <img src="labimages/cptintro1.png" alt="A view of the Cisco Packet Tracer workspace showing the logical topology canvas." class="blog-image">
+    </section>
+
+    <section class="section" id="devices">
+      <h2 class="section-title">Network devices</h2>
+      <p>When you first open packet tracer, the number of available devices can feel overwhelming, there are many devices from:</p>
+      <ul class="osi-list">
+        <li>routers</li>
+        <li>switches</li>
+        <li>hubs</li>
+        <li>firewalls</li>
+      </ul>
+      <img src="labimages/cptintro2.png" alt="Close-up of the device selection menu in Packet Tracer highlighting routers, switches, and firewalls." class="blog-image">
+      
+      <p id="hardware">You may also notice numbers like 4331? 1941? What do they mean?</p>
+      <p>They represent real Cisco hardware, like the 4331 router for example in packet tracer, behaves similarly to a real Cisco 4331 router. This is one of the reasons packet tracer is so powerful; you're learning on realistic equipment without spending any money.</p>
+    </section>
+
+    <section class="section">
+      <h2 class="section-title">Switches vs routers</h2>
+      <p>At a basic level:</p>
+      <div class="codeish">Switch = Connect devices within the same network</div>
+      <div class="codeish">Router = connects different networks</div>
+      <p>For example, a router is what allows your local network to communicate with other networks like the internet (which itself is just another network).</p>
+    </section>
+
+    <section class="section">
+      <h2 class="section-title">End devices</h2>
+      <p>End devices are where data starts or ends on a network. Examples include:</p>
+      <ul class="osi-list">
+        <li>Pcs</li>
+        <li>Laptops</li>
+        <li>Servers</li>
+        <li>Printers</li>
+      </ul>
+      <p>A key point to note is that: a server is also an end device, just like a PC. The difference is the role; a server provides a service (such as websites or IP addresses) and it can be your PC, a phone or a laptop.</p>
+    </section>
+
+    <section class="section" id="cables">
+      <h2 class="section-title">Connections and cables</h2>
+      <p>Cisco packet tracer also includes cables types such as:</p>
+      <ul class="osi-list">
+        <li>Straight through cables</li>
+        <li>Crossover cables</li>
+      </ul>
+      <p>These cables distinctions are less important on modern networks but they're still useful for understanding how networking evolved, these will be covered in a future post.</p>
+      <p>Packet tracer can automatically choose the correct cable type which makes early lab builds a lot easier.</p>
+    </section>
+
+    <section class="section" id="topology">
+      <h2 class="section-title">Example network topology</h2>
+      <p>In this example, network A and network B are connected using a router. Devices on both networks communicate through a switch and the router connects the two networks together.</p>
+      <img src="labimages/cptintro3.png" alt="A network topology diagram in Packet Tracer showing two LANs connected by a router." class="blog-image">
+    </section>
+
+    <section class="section" id="simulation">
+      <h2 class="section-title">Simulation mode</h2>
+      <p>Simulation mode allows you to:</p>
+      <ul class="osi-list">
+        <li>See how data is processed at each layer</li>
+        <li>Observe protocols in action</li>
+        <li>Watch packets move through the networks</li>
+      </ul>
+      <img src="labimages/cptintro4.png" alt="The Packet Tracer Simulation Panel showing captured protocol data and PDU movements." class="blog-image">
+      
+      <p>This behaviour is aligned with the OSI model which explains how data moves through a network layer by layer. Protocols and OSI layers will be covered in future lessons, for now, it's enough to know that packet tracer allows you to explore networking in depth without breaking anything in real life.</p>
+    </section>
+
+    <section class="section">
+      <p>This is very basic groundwork; future labs will go much deeper into how networks actually work and how to configure them properly. Thanks for reading!</p>
+    </section>
+
+  </main>
+
+  <a href="#top" class="back-to-top">↑ TOP</a>
+
+  <footer>
+    &copy; 2026 The Network Layer. Built for learning.
+  </footer>
+
+</body>
+</html>
