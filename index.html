@@ -1,229 +1,391 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>localhost.log · networking & security notes</title>
+<meta name="description" content="A running log of thoughts and experiments, covering networking, security, and whatever else is happening that week.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Source+Serif+4:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#0B0D10;
+    --bg-raised:#15181C;
+    --ink:#E7E4DC;
+    --dim:#9BA1A8;
+    --accent:#6C9BD1;
+    --cursor:#E08A46;
+    --rule:#23262B;
+    --mono: 'IBM Plex Mono', ui-monospace, Menlo, Consolas, monospace;
+    --serif: 'Source Serif 4', Georgia, serif;
+  }
 
-<link rel="icon" type="image/png" href="https://thenetworklayer.com/favicon.png">  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>The Network Layer | Home</title>
-  <style>
-    @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&display=swap');
+  *{ box-sizing:border-box; }
+  html{ background:var(--bg); }
 
-    :root {
-      --bg: #121212;
-      --text: #d1d1d1;
-      --dim: #666666;
-      --accent: #e1ad01;
-      --font-mono: 'JetBrains Mono', monospace;
-    }
+  body{
+    margin:0;
+    background:var(--bg);
+    color:var(--ink);
+    font-family:var(--serif);
+    line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+  }
 
-    * { margin: 0; padding: 0; box-sizing: border-box; }
+  a{ color:inherit; }
 
-    body {
-      background-color: var(--bg);
-      color: var(--text);
-      font-family: var(--font-mono);
-      line-height: 1.6;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      padding: 60px 20px;
-      min-height: 100vh;
-    }
+  a:focus-visible, summary:focus-visible, .nav-link:focus-visible, .modal-close:focus-visible{
+    outline:2px solid var(--accent);
+    outline-offset:3px;
+  }
 
-    nav { width: 100%; max-width: 750px; margin-bottom: 60px; }
+  .wrap{
+    max-width:680px;
+    margin:0 auto;
+    padding:0 24px 80px;
+  }
 
-    nav a {
-      color: var(--dim);
-      text-decoration: none;
-      margin-right: 30px;
-      font-size: 0.85rem;
-      text-transform: uppercase;
-      letter-spacing: 1px;
-      transition: color 0.2s;
-    }
+  /* ---- shared boxed section ---- */
 
-    nav a:hover { color: var(--accent); }
-    nav a.active { color: var(--text); border-bottom: 1px solid var(--accent); }
+  .box{
+    border:1px solid var(--rule);
+    border-radius:10px;
+    background:var(--bg-raised);
+    padding:22px 24px;
+  }
 
-    header { 
-      width: 100%; 
-      max-width: 750px; 
-      margin-bottom: 50px; 
-      border-left: 3px solid var(--accent); 
-      padding-left: 20px;
-    }
+  /* ---- header ---- */
 
-    h1 { 
-      font-size: 1.6rem; 
-      font-weight: 500; 
-      letter-spacing: -0.5px;
-      text-transform: uppercase;
-    }
+  .chrome{
+    margin-top:32px;
+    margin-bottom:32px;
+  }
 
-    .status-line {
-      font-size: 0.75rem;
-      color: var(--dim);
-      margin-top: 5px;
-      text-transform: uppercase;
-    }
+  .titleline{
+    display:flex;
+    align-items:baseline;
+    justify-content:space-between;
+    flex-wrap:wrap;
+    gap:12px;
+  }
 
-    .filter-bar { 
-      width: 100%; 
-      max-width: 750px; 
-      margin-bottom: 40px; 
-      display: flex; 
-      gap: 20px; 
-      flex-wrap: wrap; 
-      border-bottom: 1px solid #222;
-      padding-bottom: 15px;
-    }
+  .wordmark{
+    font-family:var(--mono);
+    font-weight:600;
+    font-size:22px;
+    text-decoration:none;
+    letter-spacing:-0.01em;
+    color:var(--ink);
+  }
 
-    .filter-btn {
-      background: transparent;
-      border: none;
-      color: var(--dim);
-      font-family: var(--font-mono);
-      cursor: pointer;
-      font-size: 0.8rem;
-      text-transform: uppercase;
-      letter-spacing: 1px;
-    }
+  nav a, .nav-link{
+    font-family:var(--mono);
+    font-size:12px;
+    text-transform:lowercase;
+    letter-spacing:0.06em;
+    text-decoration:none;
+    color:var(--dim);
+    border:none;
+    border-bottom:1px solid transparent;
+    padding:0 0 2px;
+    margin:0;
+    background:none;
+    appearance:none;
+    cursor:pointer;
+  }
 
-    .filter-btn.active { color: var(--accent); font-weight: 500; }
-    .filter-btn:hover { color: var(--text); }
+  nav a:hover, .nav-link:hover{ color:var(--ink); border-bottom-color:var(--ink); }
 
-    main { width: 100%; max-width: 750px; }
+  /* ---- intro line ---- */
 
-    .article-link { text-decoration: none; color: inherit; display: block; margin-bottom: 45px; }
+  .intro-box{
+    margin-bottom:24px;
+  }
 
-    article { transition: transform 0.2s ease; }
-    .article-link:hover article { transform: translateX(5px); }
+  .intro{
+    font-style:italic;
+    color:var(--dim);
+    font-size:16px;
+    margin:0;
+    max-width:52ch;
+  }
 
-    h2 { font-size: 1.15rem; margin-bottom: 8px; font-weight: 500; }
-    .meta { font-size: 0.75rem; color: var(--dim); margin-bottom: 10px; }
-    .summary { font-size: 0.95rem; color: #aaa; max-width: 600px; }
-    .tag-text { color: var(--accent); font-size: 0.7rem; margin-top: 12px; display: block; }
+  /* ---- log stream ---- */
 
-    footer {
-      margin-top: auto;
-      padding-top: 40px;
-      width: 100%;
-      max-width: 750px;
-      font-size: 0.75rem;
-      color: var(--dim);
-      border-top: 1px solid #222;
-    }
-  </style>
+  .stream{ display:flex; flex-direction:column; gap:20px; }
+
+  details.entry{
+    padding:22px 24px;
+  }
+
+  details.entry summary{
+    cursor:pointer;
+    list-style:none;
+  }
+  details.entry summary::-webkit-details-marker{ display:none; }
+  details.entry summary::marker{ content:""; }
+
+  .meta{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    font-family:var(--mono);
+    font-size:12px;
+    color:var(--dim);
+    margin-bottom:10px;
+  }
+
+  .meta time{ letter-spacing:0.01em; }
+
+  .hash{
+    color:var(--accent);
+    background:var(--bg-raised);
+    padding:2px 7px;
+    border-radius:3px;
+    font-size:11px;
+  }
+
+  .summary-row{
+    display:flex;
+    align-items:flex-start;
+    justify-content:space-between;
+    gap:16px;
+  }
+
+  .entry h2{
+    font-family:var(--serif);
+    font-weight:600;
+    font-size:22px;
+    line-height:1.3;
+    margin:0 0 10px;
+    color:var(--ink);
+  }
+
+  .toggle{
+    font-family:var(--mono);
+    font-size:14px;
+    color:var(--dim);
+    flex:0 0 auto;
+    margin-top:3px;
+  }
+  .toggle::before{ content:"[ + ]"; }
+  details[open] .toggle::before{ content:"[ – ]"; }
+  details.entry:hover .toggle{ color:var(--ink); }
+
+  .excerpt{
+    margin:0;
+    color:var(--ink);
+    font-size:16px;
+    max-width:58ch;
+  }
+
+  details[open] .excerpt{ color:var(--dim); }
+
+  .full{
+    margin-top:20px;
+    padding-top:20px;
+    border-top:1px solid var(--rule);
+    max-width:58ch;
+  }
+
+  .full p{
+    margin:0 0 16px;
+    font-size:16px;
+  }
+  .full p:last-child{ margin-bottom:0; }
+
+  .full h3{
+    font-family:var(--serif);
+    font-weight:600;
+    font-size:17px;
+    margin:28px 0 12px;
+    color:var(--ink);
+  }
+
+  .full ul{
+    margin:0 0 16px;
+    padding-left:20px;
+  }
+
+  .full li{
+    margin-bottom:8px;
+    font-size:16px;
+  }
+
+  .full blockquote{
+    margin:0 0 16px;
+    padding-left:16px;
+    border-left:2px solid var(--accent);
+    font-style:italic;
+    color:var(--dim);
+  }
+
+  @media (max-width:420px){
+    .wordmark{ font-size:19px; }
+    .entry h2{ font-size:19px; }
+    .titleline{ flex-direction:column; align-items:flex-start; gap:6px; }
+  }
+
+  /* ---- about modal ---- */
+
+  #about-modal{
+    border:1px solid var(--rule);
+    border-radius:10px;
+    background:var(--bg-raised);
+    color:var(--ink);
+    padding:36px 28px 28px;
+    width:min(90vw, 560px);
+    max-height:85vh;
+    overflow-y:auto;
+  }
+
+  #about-modal::backdrop{
+    background:rgba(0,0,0,0.65);
+  }
+
+  .modal-close{
+    position:absolute;
+    top:14px;
+    right:14px;
+    width:32px;
+    height:32px;
+    border:none;
+    background:none;
+    color:var(--dim);
+    font-family:var(--mono);
+    font-size:18px;
+    line-height:1;
+    cursor:pointer;
+    border-radius:6px;
+  }
+
+  .modal-close:hover{ color:var(--ink); background:var(--bg); }
+
+  .modal-prompt{
+    font-family:var(--mono);
+    font-size:12px;
+    color:var(--dim);
+    margin:0 0 22px;
+  }
+
+  .modal-prompt .accent{ color:var(--accent); }
+
+  #about-modal h1{
+    font-family:var(--serif);
+    font-weight:600;
+    font-size:26px;
+    margin:0 0 22px;
+    color:var(--ink);
+  }
+
+  #about-modal p{
+    font-size:16px;
+    max-width:58ch;
+    margin:0 0 18px;
+    color:var(--ink);
+  }
+
+  #about-modal p:last-of-type{ margin-bottom:0; }
+
+  .modal-fields{
+    margin-top:24px;
+    padding-top:20px;
+    border-top:1px solid var(--rule);
+    font-family:var(--mono);
+    font-size:13px;
+    color:var(--dim);
+  }
+
+  .modal-fields dt{
+    color:var(--ink);
+    display:inline-block;
+    width:100px;
+  }
+
+  .modal-fields dd{ display:inline; margin:0; }
+  .modal-fields div{ margin-bottom:8px; }
+  .modal-fields div:last-child{ margin-bottom:0; }
+</style>
 </head>
-
 <body>
 
-  <nav>
-    <a href="index.html" class="active">Home</a>
-    <a href="resources.html">Resources</a>
-    <a href="about.html">About</a>
-  </nav>
+<div class="wrap">
 
-  <header>
-    <h1>The Network Layer</h1>
-    <div class="status-line">Node: Primary-Terminal // Session: 0x821</div>
-    <p id="line1" style="font-size: 0.9rem; margin-top: 15px; min-height: 3em;"></p>
+  <header class="chrome box">
+    <div class="titleline">
+      <a href="index.html" class="wordmark">localhost.log</a>
+      <nav><button type="button" class="nav-link" id="about-trigger">about</button></nav>
+    </div>
   </header>
 
-  <div class="filter-bar">
-    <button class="filter-btn active" data-filter="all">All_Categories</button>
-    <button class="filter-btn" data-filter="fundamentals">Fundamentals</button>
-    <button class="filter-btn" data-filter="configs">Labs</button>
-    <button class="filter-btn" data-filter="career">Career</button>
+  <div class="intro-box box">
+    <p class="intro">a running log of thoughts and experiments, in the order they happened. tap an entry to open it.</p>
   </div>
 
-<main>
-    <a href="posts/ciscopacketintro.html" class="article-link">
-      <article data-tag="configs">
-        <div class="meta">19-01-2026 // log_id: 003</div>
-        <h2>Cisco Packet Tracer: A Beginner’s Introduction</h2>
-        <p class="summary">A hands-on guide to using Cisco's powerful simulation tool for designing, building, and testing virtual network topologies.</p>
-        <span class="tag-text">#VIRTUAL_LAB_01</span>
-      </article>
-    </a>
+  <main class="stream">
 
-    <a href="posts/networkingroadmap.html" class="article-link">
-      <article data-tag="career">
-        <div class="meta">16-12-2025 // log_id: 002</div>
-        <h2>Breaking Into Networking: My Roadmap</h2>
-        <p class="summary">A strategic look at certifications and hands-on experience required for the modern network engineer.</p>
-        <span class="tag-text">#CAREER_LOG</span>
-      </article>
-    </a>
+    <details class="entry box" id="intro">
+      <summary>
+        <div class="meta">
+          <time datetime="2026-07-01T12:00">2026-07-01 · 12:00</time>
+          <span class="hash">#000001</span>
+        </div>
+        <div class="summary-row">
+          <h2>An introduction for this site</h2>
+          <span class="toggle" aria-hidden="true"></span>
+        </div>
+        <p class="excerpt">Welcome. The purpose of this website is to record my learning in networking, python and eventually, cybersecurity.</p>
+      </summary>
+      <div class="full">
+        <p>Welcome. The purpose of this website is to record my learning in networking, python and eventually, cybersecurity. For the next year or so (until I get my CCNA) I'll be primarily focusing on networking. I'm pretty new to networking, I studied a bit of the CCNA before and had attempts to record what I learned but it quickly became boring to me because I ended up writing everything I learned and I don't want that.</p>
 
-    <a href="posts/introtonetworklayer.html" class="article-link">
-      <article data-tag="fundamentals">
-        <div class="meta">09-12-2025 // log_id: 001</div>
-        <h2>An Introduction To The Network Layer</h2>
-        <p class="summary">Analyzing the mechanics of IP addressing, routing protocols, and Layer 3 encapsulation.</p>
-        <span class="tag-text">#OSI_LAYER_3</span>
-      </article>
-    </a>
+        <p>What I do want is to record primarily labs and things that I fully understand and learned; projects I made and things that are interesting to me, I want all my progress for this to be recorded here and hopefully I can help people with similar projects.</p>
+      </div>
+    </details>
+
   </main>
 
-  <footer>
-    <p>© 2026 THE NETWORK LAYER</p>
-  </footer>
+</div>
+
+<dialog id="about-modal">
+  <button type="button" class="modal-close" id="about-close" aria-label="Close about">&times;</button>
+
+  <p class="modal-prompt"><span class="accent">&gt;</span> About</p>
+
+  <p>This is a running projects/lab page for networking, python and eventually, cybersecurity. This website is mainly for my own learning, keeping track of progress and I intentionally keep it really simple because it's easier for me to maintain, I plan on always keeping it this way.</p>
+
+  <p>I don't use AI in any of my projects or writing, the only thing I use it for is for all HTML, CSS and everything related to the appearance and behind the scenes of this website, that's it.</p>
+
+  <p>I don't intend to make money from this website including the use of ads as the best sources of knowledge I've received are free and I hope to help other people in that way (shoutout to Jeremy's IT Lab)</p>
+
+  <div class="modal-fields">
+    <div><dt>status</dt><dd>online</dd></div>
+    <div><dt>studying</dt><dd>CCNA via Jeremy's IT Lab</dd></div>
+  </div>
+</dialog>
+
 <script>
-    /* Typewriter Logic */
-    const lines = [
-      "> Welcome to TheNetworkLayer.com",
-      "> A structured repository of networking fundamentals, labs and career notes."
-    ];
+  const aboutModal = document.getElementById('about-modal');
+  const aboutTrigger = document.getElementById('about-trigger');
+  const aboutClose = document.getElementById('about-close');
 
-    const el = document.getElementById("line1");
-    let lineIndex = 0;
-    let charIndex = 0;
+  aboutTrigger.addEventListener('click', () => {
+    aboutModal.showModal();
+  });
 
-    function type() {
-      if (lineIndex < lines.length) {
-        if (charIndex < lines[lineIndex].length) {
-          el.innerHTML += lines[lineIndex].charAt(charIndex);
-          charIndex++;
-          setTimeout(type, 25);
-        } else {
-          el.innerHTML += "<br>";
-          lineIndex++;
-          charIndex = 0;
-          setTimeout(type, 400);
-        }
-      }
-    }
+  aboutClose.addEventListener('click', () => {
+    aboutModal.close();
+  });
 
-    /* Filter Logic */
-    const filterButtons = document.querySelectorAll('.filter-btn');
-    const articles = document.querySelectorAll('main > a, main > article');
+  aboutModal.addEventListener('click', (event) => {
+    const box = aboutModal.getBoundingClientRect();
+    const clickedInside =
+      event.clientX >= box.left && event.clientX <= box.right &&
+      event.clientY >= box.top && event.clientY <= box.bottom;
+    if (!clickedInside) aboutModal.close();
+  });
+</script>
 
-    filterButtons.forEach(button => {
-      button.addEventListener('click', () => {
-        // 1. Update active button UI
-        filterButtons.forEach(btn => btn.classList.remove('active'));
-        button.classList.add('active');
-
-        // 2. Get the filter value
-        const filterValue = button.getAttribute('data-filter');
-
-        // 3. Show/Hide articles
-        articles.forEach(item => {
-          // Note: we check the 'article' tag even if it's wrapped in an <a> tag
-          const article = item.tagName === 'A' ? item.querySelector('article') : item;
-          const articleTag = article.getAttribute('data-tag');
-
-          if (filterValue === 'all' || filterValue === articleTag) {
-            item.style.display = 'block';
-          } else {
-            item.style.display = 'none';
-          }
-        });
-      });
-    });
-
-    window.onload = type;
-  </script>
 </body>
 </html>
