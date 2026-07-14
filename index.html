@@ -5,10 +5,17 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>thenetworklayer.com</title>
 <meta name="description" content="A running log of labs and projects, covering networking, security.">
+
+<!-- Open Graph: what shows when the site is shared on Discord, forums, etc. -->
+<meta property="og:title" content="thenetworklayer.com">
+<meta property="og:description" content="A running log of labs and projects, covering networking, security.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://thenetworklayer.com/">
+
 <link rel="icon" type="image/png" href="favicon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@300;400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
   :root{
     --bg:#0B0D10;
@@ -19,6 +26,7 @@
     --cursor:#E08A46;
     --rule:#23262B;
     --font: 'Rajdhani', 'Segoe UI', system-ui, sans-serif;
+    --mono: 'IBM Plex Mono', ui-monospace, 'Cascadia Mono', monospace;
   }
 
   *{ box-sizing:border-box; }
@@ -36,7 +44,8 @@
 
   a{ color:inherit; }
 
-  a:focus-visible, summary:focus-visible, .nav-link:focus-visible, .modal-close:focus-visible{
+  a:focus-visible, summary:focus-visible, .nav-link:focus-visible,
+  .modal-close:focus-visible, .filter-btn:focus-visible{
     outline:2px solid var(--accent);
     outline-offset:3px;
   }
@@ -80,6 +89,21 @@
     color:var(--ink);
   }
 
+  /* terminal cursor after the wordmark */
+  .wordmark::after{
+    content:"▮";
+    color:var(--cursor);
+    margin-left:4px;
+    font-size:0.8em;
+    animation:blink 1.2s step-end infinite;
+  }
+
+  @keyframes blink{ 50%{ opacity:0; } }
+
+  @media (prefers-reduced-motion: reduce){
+    .wordmark::after{ animation:none; }
+  }
+
   nav a, .nav-link{
     font-family:var(--font);
     font-weight:500;
@@ -102,7 +126,7 @@
   /* ---- intro line ---- */
 
   .intro-box{
-    margin-bottom:24px;
+    margin-bottom:20px;
   }
 
   .intro{
@@ -114,6 +138,47 @@
     letter-spacing:0.01em;
   }
 
+  /* ---- filter bar ---- */
+
+  .filter-box{
+    margin-bottom:24px;
+    padding:14px 24px;
+    display:flex;
+    align-items:baseline;
+    flex-wrap:wrap;
+    gap:8px 16px;
+  }
+
+  .filter-label{
+    font-family:var(--mono);
+    font-weight:400;
+    font-size:12px;
+    color:var(--dim);
+  }
+
+  .filter-label .prompt{ color:var(--cursor); }
+
+  .filter-btn{
+    font-family:var(--mono);
+    font-weight:400;
+    font-size:12px;
+    text-transform:lowercase;
+    letter-spacing:0.02em;
+    color:var(--dim);
+    background:none;
+    border:none;
+    border-bottom:1px solid transparent;
+    padding:0 0 2px;
+    cursor:pointer;
+  }
+
+  .filter-btn:hover{ color:var(--ink); border-bottom-color:var(--ink); }
+
+  .filter-btn.active{
+    color:var(--accent);
+    border-bottom-color:var(--accent);
+  }
+
   /* ---- log stream ---- */
 
   .stream{ display:flex; flex-direction:column; gap:20px; }
@@ -121,6 +186,8 @@
   details.entry{
     padding:22px 24px;
   }
+
+  details.entry[hidden]{ display:none; }
 
   details.entry summary{
     cursor:pointer;
@@ -133,23 +200,39 @@
     display:flex;
     align-items:center;
     justify-content:space-between;
-    font-family:var(--font);
-    font-weight:300;
-    font-size:12px;
+    font-family:var(--mono);
+    font-weight:400;
+    font-size:11px;
     color:var(--dim);
     margin-bottom:10px;
   }
 
   .meta time{ letter-spacing:0.01em; }
 
-  .hash{
-    color:var(--accent);
-    background:var(--bg-raised);
+  .meta-right{
+    display:flex;
+    align-items:center;
+    gap:8px;
+  }
+
+  .tag{
+    color:var(--dim);
+    border:1px solid var(--rule);
     padding:2px 7px;
     border-radius:3px;
     font-size:11px;
-    font-weight:500;
   }
+
+  .hash{
+    color:var(--accent);
+    background:var(--bg);
+    padding:2px 7px;
+    border-radius:3px;
+    font-size:11px;
+    text-decoration:none;
+  }
+
+  a.hash:hover{ color:var(--ink); }
 
   .summary-row{
     display:flex;
@@ -168,15 +251,15 @@
   }
 
   .toggle{
-    font-family:var(--font);
-    font-weight:500;
-    font-size:14px;
+    font-family:var(--mono);
+    font-weight:400;
+    font-size:12px;
     color:var(--dim);
     flex:0 0 auto;
-    margin-top:3px;
+    margin-top:5px;
   }
-  .toggle::before{ content:"[ + ]"; }
-  details[open] .toggle::before{ content:"[ – ]"; }
+  .toggle::before{ content:"[+]"; }
+  details[open] .toggle::before{ content:"[–]"; }
   details.entry:hover .toggle{ color:var(--ink); }
 
   .excerpt{
@@ -228,6 +311,13 @@
     letter-spacing:0.01em;
   }
 
+  .full img{
+    max-width:100%;
+    height:auto;
+    border:1px solid var(--rule);
+    border-radius:6px;
+  }
+
   @media (max-width:420px){
     .wordmark{ font-size:19px; }
     .entry h2{ font-size:19px; }
@@ -271,14 +361,14 @@
   .modal-close:hover{ color:var(--ink); background:var(--bg); }
 
   .modal-prompt{
-    font-family:var(--font);
-    font-weight:300;
+    font-family:var(--mono);
+    font-weight:400;
     font-size:12px;
     color:var(--dim);
     margin:0 0 22px;
   }
 
-  .modal-prompt .accent{ color:var(--accent); }
+  .modal-prompt .accent{ color:var(--cursor); }
 
   #about-modal h1{
     font-family:var(--font);
@@ -301,9 +391,9 @@
     margin-top:24px;
     padding-top:20px;
     border-top:1px solid var(--rule);
-    font-family:var(--font);
-    font-weight:300;
-    font-size:13px;
+    font-family:var(--mono);
+    font-weight:400;
+    font-size:12px;
     color:var(--dim);
   }
 
@@ -324,22 +414,65 @@
 
   <header class="chrome box">
     <div class="titleline">
-      <a href="index.html" class="wordmark">thenetworklayer.com </a>
+      <a href="index.html" class="wordmark">thenetworklayer.com</a>
       <nav><button type="button" class="nav-link" id="about-trigger">about</button></nav>
     </div>
   </header>
 
   <div class="intro-box box">
-    <p class="intro">A running log of labs and projects, covering networking, security. Click an entry to open it. </p>
+    <p class="intro">A running log of labs and projects, covering networking, security. Click an entry to open it.</p>
+  </div>
+
+  <!-- Filter bar. Hidden until JS runs, so a no-JS visitor just sees every post. -->
+  <div class="filter-box box" id="filters" hidden>
+    <span class="filter-label"><span class="prompt">&gt;</span> filter:</span>
+    <button type="button" class="filter-btn active" data-tag="all">all</button>
+    <button type="button" class="filter-btn" data-tag="networking">networking</button>
+    <button type="button" class="filter-btn" data-tag="security">security</button>
+    <button type="button" class="filter-btn" data-tag="python">python</button>
+    <button type="button" class="filter-btn" data-tag="hardware">hardware</button>
   </div>
 
   <main class="stream">
 
+    <!-- ============================================================
+      HOW TO ADD A POST — copy this template, then:
+        1. Set a short, permanent id (it becomes the permalink: index.html#your-id)
+        2. Set data-tags to ONE of: networking / security / python / hardware
+           (leave data-tags off entirely for untagged posts like the intro —
+            untagged posts show under every filter)
+        3. Make the href in the hash badge match the id
+        4. Images go inside .full as:
+           <img src="img/example.png" alt="describe it" loading="lazy">
+
+    <details class="entry box" id="your-id" data-tags="networking">
+      <summary>
+        <div class="meta">
+          <time datetime="2026-08-01">August 2026</time>
+          <div class="meta-right">
+            <span class="tag">networking</span>
+            <a class="hash" href="#your-id">your-id</a>
+          </div>
+        </div>
+        <div class="summary-row">
+          <h2>Post title</h2>
+          <span class="toggle" aria-hidden="true"></span>
+        </div>
+        <p class="excerpt">One-line summary shown when collapsed.</p>
+      </summary>
+      <div class="full">
+        <p>Post body.</p>
+      </div>
+    </details>
+    ============================================================ -->
+
     <details class="entry box" id="intro">
       <summary>
         <div class="meta">
-          <time datetime="2026-07-01T12:00">July 2026 · 12:51</time>
-          <span class="hash">intro</span>
+          <time datetime="2026-07-01">July 2026</time>
+          <div class="meta-right">
+            <a class="hash" href="#intro">intro</a>
+          </div>
         </div>
         <div class="summary-row">
           <h2>An introduction for this site</h2>
@@ -376,17 +509,14 @@
 </dialog>
 
 <script>
+  /* ---- about modal ---- */
+
   const aboutModal = document.getElementById('about-modal');
   const aboutTrigger = document.getElementById('about-trigger');
   const aboutClose = document.getElementById('about-close');
 
-  aboutTrigger.addEventListener('click', () => {
-    aboutModal.showModal();
-  });
-
-  aboutClose.addEventListener('click', () => {
-    aboutModal.close();
-  });
+  aboutTrigger.addEventListener('click', () => aboutModal.showModal());
+  aboutClose.addEventListener('click', () => aboutModal.close());
 
   aboutModal.addEventListener('click', (event) => {
     const box = aboutModal.getBoundingClientRect();
@@ -395,6 +525,70 @@
       event.clientY >= box.top && event.clientY <= box.bottom;
     if (!clickedInside) aboutModal.close();
   });
+
+  /* ---- tag filters + permalinks ----
+     URL rules:
+       #tag=security   → filter the stream to that tag (shareable)
+       #some-entry-id  → open that entry and scroll to it
+     Untagged entries (no data-tags attribute) show under every filter. */
+
+  const filterBox = document.getElementById('filters');
+  const filterButtons = Array.from(document.querySelectorAll('.filter-btn'));
+  const validTags = filterButtons.map(b => b.dataset.tag);
+  const entries = Array.from(document.querySelectorAll('details.entry'));
+  const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  filterBox.hidden = false; // JS is running, so reveal the filter bar
+
+  function applyFilter(tag) {
+    filterButtons.forEach(btn => {
+      const isActive = btn.dataset.tag === tag;
+      btn.classList.toggle('active', isActive);
+      btn.setAttribute('aria-pressed', isActive);
+    });
+    entries.forEach(entry => {
+      const tags = (entry.dataset.tags || '').split(/\s+/).filter(Boolean);
+      const show = tag === 'all' || tags.length === 0 || tags.includes(tag);
+      entry.hidden = !show;
+    });
+  }
+
+  filterButtons.forEach(btn => {
+    btn.addEventListener('click', () => {
+      const tag = btn.dataset.tag;
+      const url = tag === 'all'
+        ? location.pathname + location.search
+        : '#tag=' + tag;
+      history.pushState(null, '', url);
+      applyFilter(tag);
+    });
+  });
+
+  function handleHash() {
+    const hash = decodeURIComponent(location.hash.slice(1));
+
+    if (!hash) { applyFilter('all'); return; }
+
+    if (hash.startsWith('tag=')) {
+      const tag = hash.slice(4);
+      applyFilter(validTags.includes(tag) ? tag : 'all');
+      return;
+    }
+
+    const target = document.getElementById(hash);
+    if (target && target.classList.contains('entry')) {
+      applyFilter('all');          // make sure the linked entry isn't filtered out
+      target.open = true;          // a permalink should show content, not a collapsed box
+      target.scrollIntoView({
+        behavior: reducedMotion ? 'auto' : 'smooth',
+        block: 'start'
+      });
+    }
+  }
+
+  window.addEventListener('hashchange', handleHash);
+  window.addEventListener('popstate', handleHash); // back/forward through filter states
+  handleHash();
 </script>
 
 </body>
