@@ -499,6 +499,68 @@
     </details>
     ============================================================ -->
 
+    <details class="entry box" id="advent-laptop" data-tags="hardware">
+      <summary>
+        <div class="meta">
+          <time datetime="2026-07-01">July 2026</time>
+          <div class="meta-right">
+            <span class="tag">hardware</span>
+            <a class="hash" href="#advent-laptop">advent-laptop</a>
+          </div>
+        </div>
+        <div class="summary-row">
+          <h2>Fixing a £5 2006 laptop, and a lesson about encryption</h2>
+          <span class="toggle" aria-hidden="true"></span>
+        </div>
+        <p class="excerpt">A £5 Advent 7113 off Vinted: a stubborn teardown, a hard drive full of unencrypted personal data, and a fight to get antiX booting on 32-bit hardware.</p>
+      </summary>
+      <div class="full">
+        <img src="photos/hardware/adventlaptop.png" alt="the advent 7113 laptop, bought for £5 from vinted" loading="lazy">
+
+        <p>For £5, I bought a 2006 Advent 7113 off Vinted. It has 1GB of RAM. I like messing around with old hardware and this is the oldest laptop I've ever bought. It was big, chunky and had two ethernet ports, a DVD player and a physical network on/off switch. It had a port for those old mouse/keyboards (apparently called a PS/2 port) that I thought only existed on PCs. But it taught me about encryption and the value of preventing e-waste.</p>
+
+        <p>I've repaired and upgraded my fair share of hardware before; the ThinkPad X220, old netbooks and Xbox 360s. I'm no pro but I've enjoyed tinkering with old hardware, primarily because it's so cheap.</p>
+
+        <p>I wasn't even expecting the laptop to be functional but with my PC cable sitting around with the voltage matching up, I booted it up and was surprised to see it worked. Right away it launched into Windows Vista, the keyboard didn't work but I wasn't even expecting it to boot. I see users on the home page, not knowing the passwords and expecting the hard drive to be extremely old, I take this thing open. My god, was this thing ridiculously complex.</p>
+
+        <p>Maybe the internal hardware layout wasn't as agreed upon in the early 2000s but this was a mess to take open; layers upon layers of screws, screws and more screws; oxidised screws, stripped ones, ones that I took about 10 off of and didn't remove anything, I started to label them because I was losing track of what went where because they were so different. It turns out, Advent's choices for their internal hardware were a result of cost cutting; cheap manufacturing doesn't always go well with repairability and access to specific internal components, the whole philosophy with Advent was getting it off the shelf and in a living room with little thought into much else.</p>
+
+        <p>This was obvious, this thing was stubborn, I even needed a set of pliers to remove something called a hex screw just to get to the HDD. When I did run a SMART scan on the HDD, as expected it was in poor condition, I used AI to summarise the results so I genuinely don't know more than this other than; by the nature of its age, it was worth replacing, so I did.</p>
+
+        <p>I repasted the thermal paste on the laptop since it had definitely cracked in the two decades it had been lying around, one section of the heat sink had a thermal pad which I don't think I've ever seen before and I took the CMOS battery out to prevent any leaking on such an old battery, if it does leak, it could destroy the whole board. I don't have CMOS batteries lying around so I had to live without one, it just means the system date can't sync which means I can't access the internet which means I have to manually change the date every time I want.</p>
+
+        <p>I'm surprised I didn't break it to be honest, the fan and heat sink were connected, I couldn't get any further down and I'd removed all the screws I possibly could.</p>
+
+        <p>I connected the hard drive to a laptop, and to my surprise, Windows Vista has zero encryption; all the user files that were password protected are now just completely out there. Out of curiosity, I did look on the hard drive and oh man, the heaps of personal data: National Insurance numbers, family photos and videos, email addresses, addresses, full names, CVs, phone numbers, all dated but still risky to have lying around.</p>
+
+        <p>To my surprise, encryption wasn't a standard in the early 2000s; I looked into it and one of the main reasons was performance, full disk encryption like we take for granted now meant a noticeable performance hit. It's only very recently that encryption became a standard default across Windows, Apple and Linux.</p>
+
+        <p>I wiped the data and threw away the drive, adding an unnecessary 1TB HDD, because it was the only one I had lying around.</p>
+
+        <img src="photos/hardware/advent.png" alt="the advent 7113 opened up during the repair" loading="lazy">
+
+        <p>Next, the installation; antiX is perfect for old machines, they have drive encryption, network security (that Vista didn't support anymore) and essentially is one of very few options for 32-bit machines like this one.</p>
+
+        <p>My god, was it a battle installing this. This is where my knowledge cuts off and I'm left in the dark; I know that this machine being old is the main cause, I had the DVD drive ISO boot as a backup option but I didn't want to go out of my way to buy blank DVDs if I didn't need to. The specific format and size of the USB as well as the specific way it was booted were issues that I didn't know how to resolve, to be honest, I'm not interested in learning driver, Linux or OS setups at the moment.</p>
+
+        <p>I relied on Fable 5, the most intelligent model Anthropic has right now and is leaving soon, I wanted to get some last use out of it and what followed was a complex back and forth regarding setting up the OS on this machine. Maybe I should've left it but no, I'm getting my £5 worth and clearly, I have enough time on my hands...</p>
+
+        <p>What followed was the longest technical back and forth ever, the pattern was: find an issue, send it to Fable, receive a response, fix that issue but make another, for over an hour.</p>
+
+        <p>The short version to save another 20 paragraphs is this; the laptop is old enough that booting from USB isn't really a thing it was designed to do. Every normal method failed: Ventoy, manual booting, a wild goose chase, I changed USB three times, I used a checksum to confirm no corruption in the OS. What finally worked was using the bootloader from a previously installed Linux Mint and somehow copied antiX onto there? I seriously have no idea beyond this, it was a miracle when it finally installed.</p>
+
+        <p>Not a fun way to spend the evening, I only got this done thanks to Fable 5; the more information I gave it, the closer it got, and eventually it was done. My reward: a pile of crap. No, for real though; it makes a great offline text machine, I also hate e-waste, it's also cool to have something so old, replacements for specific parts still exist on eBay but not for the cheapest since this thing is very niche.</p>
+
+        <p>Here it is, feast your eyes</p>
+
+        <img src="photos/hardware/fastfetch.png" alt="fastfetch system info showing the advent 7113 running antix linux" loading="lazy">
+
+        <p>It can run text files, has access to likely some Linux applications, can probably run DVDs but I have none lying around anymore, it can send emails and can barely open one tab of Firefox.</p>
+
+        <p>There you have it; what can a £5 laptop buy you? A writing machine, emails and a very very slow browser, honestly not bad at all.</p>
+      </div>
+    </details>
+
     <details class="entry box" id="intro">
       <summary>
         <div class="meta">
